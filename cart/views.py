@@ -3,21 +3,21 @@ from .cart import Cart
 import stripe
 from store.models import Product
 from django.http import JsonResponse
+from django.contrib import messages
 
 # Create your views here.
 
 def cart_summary(request):
 	cart = Cart(request)
-	try:
-		token = request.POST['stripeToken']
-		email = request.POST['stripeEmail']
-		customer = stripe.Customer.create(email=email, source=token)
-		stripe.Charge.create(amount=stripe_total, currency="eur", description=description, customer=customer.id)
-	except stripe.error.CardError as e:
-		return e
-	cart_products = cart.get_prods
+	cart_products = cart.get_prods()
+	quantities = cart.get_quants()
 	totals = cart.cart_total()
-	return render(request, "cart_summary.html", {"cart_products":cart_products, "quantities":quantities, "totals":totals})
+
+	return render(request, "cart_summary.html", {
+        "cart_products": cart_products, 
+        "quantities": quantities, 
+        "totals": totals
+    }) 
 
 
 

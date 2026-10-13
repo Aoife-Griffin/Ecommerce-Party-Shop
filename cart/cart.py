@@ -29,8 +29,7 @@ class Cart():
 		return products
 	
 	def get_quants(self):
-		quantities = self.cart
-		return quantities
+		return self.cart
 
 	def update(self, product, quantity):
 		product_id = str(product)
@@ -59,11 +58,4 @@ class Cart():
 						total = total + (product.sale_price * value)
 					else:
 						total = total + (product.price * value)
-		return render(request, 'cart.html', {'data_key':data_key, 'stripe_total':stripe_total,
-		'description':description})
-		stripe.api_key = settings.STRIPE_SECRET_KEY
-		stripe_total = int(total*100)
-		description = 'Party Shop-New Order'
-		data_key = settings.STRIPE_PUBLISHABLE_KEY
-		if request.method =='POST':
-			print(reques.POST)
+		return total

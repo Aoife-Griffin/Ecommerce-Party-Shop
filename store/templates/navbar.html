@@ -1,19 +1,24 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#!">Browse Now</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <a class="navbar-brand fw-bold" href="{% url 'home' %}">Browse Now</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a></li>
-                
+
                 {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'order_history' %}">My Orders</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
                 {% endif %}
 
-
+                <!-- Dynamic Categories Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -26,12 +31,19 @@
                     </ul>
                 </li>
             </ul>
+
+            <!-- Product Search Engine  -->
+            <form class="d-flex me-3" method="GET" action="{% url 'search' %}">
+                <input class="form-control me-2" type="search" name="q" placeholder="Search party shop..." aria-label="Search" value="{{ request.GET.q|default:'' }}">
+                <button class="btn btn-outline-dark" type="submit">Search</button>
+            </form>
+
+            <!-- Shopping Cart View -->
             <form class="d-flex">
                 <a href="{% url 'cart_summary' %}" class="btn btn-outline-dark"><i class="bi-cart-fill me-1"></i>
                     Cart
-                    <span class="badge bg-dark text-white ms-1 rounded-pill" 
-                    id="cart_quantity">0
-                </span>></a>
+                    <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity">0</span>
+                </a>
             </form>
         </div>
     </div>

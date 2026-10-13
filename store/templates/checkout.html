@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Simulated Checkout</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Portfolio Demo Environment — No Real Charges Applied</p>
+        </div>
+    </div>
+</header>
+
+<div class="container py-5">
+    <div class="row g-5">
+        <!-- Order Breakdown Summary Panel -->
+        <div class="col-md-5 order-md-last">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-primary fw-bold">Your Basket</span>
+            </h4>
+            <ul class="list-group mb-3 shadow-sm">
+                {% for product in cart_products %}
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <h6 class="my-0 fw-bold">{{ product.name }}</h6>
+                            <small class="text-muted">
+                                Qty: 
+                                {% for key, value in quantities.items %}
+                                    {% if key == product.id|slugify %}{{ value }}{% endif %}
+                                {% endfor %}
+                            </small>
+                        </div>
+                        <span class="text-muted">
+                            €{% if product.is_sale %}{{ product.sale_price }}{% else %}{{ product.price }}{% endif %}
+                        </span>
+                    </li>
+                {% endfor %}
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                    <span class="fw-bold">Total (EUR)</span>
+                    <strong class="text-success fs-5">€{{ totals }}</strong>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Simulated Shipping Profile Collection Form Component -->
+        <div class="col-md-7">
+            <div class="card p-4 shadow-sm">
+                <h4 class="mb-3 fw-bold">Shipping Information</h4>
+                <div class="alert alert-info py-2 small" role="alert">
+                    This is a portfolio demo site. Please utilize mock or placeholder details only.
+                </div>
+                
+                <form method="POST" action="{% url 'process_order' %}">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="fullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" name="full_name" placeholder="John Doe" value="{{ request.user.get_full_name|default:'' }}" required>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" value="{{ request.user.email|default:'' }}" required>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="address" class="form-label">Shipping Address</label>
+                            <textarea class="form-control" id="address" name="shipping_address" rows="3" placeholder="123 Jungle Street, Dublin, D02 XF66" required></textarea>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+                    <button class="w-100 btn btn-success btn-lg fw-bold" type="submit">Place Demo Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
