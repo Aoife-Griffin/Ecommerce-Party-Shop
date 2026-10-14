@@ -1,0 +1,21 @@
+[
+  {
+    "model": "store.category",
+    "pk": 1,
+    "fields": { "name": "Balloons" }
+  },
+  {
+    "model": "store.product",
+    "pk": 1,
+    "fields": {
+      "name": "Jungle Theme Helium Balloon",
+      "price": "4.99",
+      "category": 1,
+      "description": "Premium helium balloon designed for jungle-themed parties.",
+      "image": "uploads/product/balloon.jpg",
+      "is_sale": false,
+      "sale_price": "0.00",
+      "stock": 25
+    }
+  }
+]

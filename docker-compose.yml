@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_DEBUG=True
+      - DJANGO_SECRET_KEY=django-insecure-portfolio-docker-sandbox-fallback-key-123
+      - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
