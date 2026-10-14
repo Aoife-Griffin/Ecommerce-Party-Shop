@@ -70,6 +70,7 @@ parso==0.8.5
 pathspec==1.1.1
 pillow==12.2.0
 platformdirs==4.5.0
+whitenoise>=6.0.0
 pluggy==1.6.0
 prometheus_client==0.23.1
 prompt_toolkit==3.0.52
